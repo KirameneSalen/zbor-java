@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/CompanieZbor" />
+        <option name="gradleHome" value="" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/CompanieZbor" />
+            <option value="$PROJECT_DIR$/CompanieZbor/CompanieZborClient" />
+            <option value="$PROJECT_DIR$/CompanieZbor/CompanieZborClientFX" />
+            <option value="$PROJECT_DIR$/CompanieZbor/CompanieZborModel" />
+            <option value="$PROJECT_DIR$/CompanieZbor/CompanieZborNetworking" />
+            <option value="$PROJECT_DIR$/CompanieZbor/CompanieZborPersistence" />
+            <option value="$PROJECT_DIR$/CompanieZbor/CompanieZborRestServices" />
+            <option value="$PROJECT_DIR$/CompanieZbor/CompanieZborServer" />
+            <option value="$PROJECT_DIR$/CompanieZbor/CompanieZborServices" />
+            <option value="$PROJECT_DIR$/CompanieZbor/CompanieZborUser" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/CompanieZbor/CompanieZborClient" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/CompanieZbor/CompanieZborClient" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

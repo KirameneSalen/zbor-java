@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="CompanieZbor.CompanieZborPersistence" options="-parameters" />
+      <module name="CompanieZbor.CompanieZborPersistence.main" options="-parameters" />
+      <module name="CompanieZbor.CompanieZborPersistence.test" options="-parameters" />
+      <module name="CompanieZbor.CompanieZborRestServices" options="-parameters" />
+      <module name="CompanieZbor.CompanieZborRestServices.main" options="-parameters" />
+      <module name="CompanieZbor.CompanieZborRestServices.test" options="-parameters" />
+    </option>
+  </component>
+</project>
