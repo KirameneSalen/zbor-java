@@ -17,6 +17,7 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-websocket")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation(group = "org.apache.logging.log4j", name = "log4j-core", version = "2.17.1")
     implementation(group = "org.apache.logging.log4j", name = "log4j-api", version = "2.14.0")

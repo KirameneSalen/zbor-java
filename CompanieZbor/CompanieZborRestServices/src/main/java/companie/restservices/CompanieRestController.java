@@ -4,7 +4,9 @@ import companie.model.Zbor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import repository.jdbc.ZborRepositoryJDBC;
 
 import java.util.Collection;
@@ -14,6 +16,8 @@ import java.util.Collection;
 public class CompanieRestController {
     @Autowired
     private ZborRepositoryJDBC repository;
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
     @GetMapping("/test")
     public  String test(@RequestParam(value="name", defaultValue="Hello") String name) {
@@ -22,9 +26,13 @@ public class CompanieRestController {
 
     @PostMapping
     public Zbor create(@RequestBody Zbor zbor){
-        System.out.println("Creating computerRepairRequest");
-        return repository.add(zbor);
-
+        System.out.println("Creating zbor");
+        Zbor saved = repository.add(zbor);
+        messagingTemplate.convertAndSend(
+                "/topic/zbor-created",
+                saved
+        );
+        return saved;
     }
 
     @GetMapping("/{id}")

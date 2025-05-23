@@ -10,7 +10,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
-@ComponentScan({"companie.restservices","repository"})
+@ComponentScan({"companie.restservices","repository", "companie.config"})
 @SpringBootApplication
 public class StartRestServices {
     public static void main(String[] args) {
