@@ -25,8 +25,7 @@ dependencies {
     implementation("org.hibernate.orm:hibernate-community-dialects:6.4.4.Final")
     implementation(group = "org.apache.logging.log4j", name = "log4j-core", version = "2.17.1")
     implementation(group = "org.apache.logging.log4j", name = "log4j-api", version = "2.14.0")
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
+
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations
     implementation(group="com.fasterxml.jackson.core", name="jackson-annotations", version="2.15.0")
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core

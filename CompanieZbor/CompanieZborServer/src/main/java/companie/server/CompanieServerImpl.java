@@ -67,12 +67,16 @@ public class CompanieServerImpl implements ICompanieServices {
         }
         zbor.setNrLocuriDisponibile(zbor.getNrLocuriDisponibile() - nrLocuri);
         zborRepository.update(zbor);
-//        Bilet bilet = new Bilet(0, zbor);
-//        bilet = biletRepository.add(bilet);
-//        for (Turist turist : turistList) {
-//            TuristBilet turistBilet = new TuristBilet(0, turist, bilet);
-//            turistBilet = turistBiletRepository.add(turistBilet);
-//        }
+        Bilet bilet = new Bilet(0, zbor);
+        bilet = biletRepository.add(bilet);
+        for (Turist turist : turistList) {
+            Turist turistFound = turistRepository.findOne(turist.getNume());
+            if (turistFound == null) {
+                turistFound = turistRepository.add(turist);
+            }
+            TuristBilet turistBilet = new TuristBilet(0, turistFound, bilet);
+            turistBilet = turistBiletRepository.add(turistBilet);
+        }
         loggedClients.forEach((k,v)->{
             v.biletCumparat(zbor, nrLocuri);
         });

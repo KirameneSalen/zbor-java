@@ -9,11 +9,12 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="companie.client.gui.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="companie.client.gui.MainController">
    <children>
       <Label fx:id="loggedUserLabel" layoutX="529.0" layoutY="6.0" />
-      <TableView fx:id="zborTable" layoutX="200.0" layoutY="109.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <TableView fx:id="zborTable" layoutX="200.0" layoutY="109.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="202.0">
         <columns>
           <TableColumn fx:id="idColumn" prefWidth="25.0" text="id" />
           <TableColumn fx:id="aeroportColumn" prefWidth="150.0" text="aeroport" />
@@ -30,7 +31,7 @@
                   <Insets top="12.5" />
                </HBox.margin>
             </DatePicker>
-            <TextField fx:id="oraPlecariiFilter" prefHeight="25.0" prefWidth="90.0" promptText="ora plecare">
+            <TextField fx:id="destinatieFilter" prefHeight="25.0" prefWidth="90.0" promptText="destinatie">
                <HBox.margin>
                   <Insets left="10.0" top="12.5" />
                </HBox.margin>
@@ -47,19 +48,20 @@
             </Button>
          </children>
       </HBox>
-      <HBox layoutX="364.0" layoutY="322.0" prefHeight="50.0" prefWidth="200.0" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="36.0">
+      <HBox layoutX="586.0" layoutY="336.0" prefHeight="50.0" prefWidth="175.0" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0">
          <children>
-            <TextField fx:id="nrBileteTextField" prefHeight="25.0" prefWidth="75.0" promptText="nr bilete">
+            <TextField fx:id="nrBileteTextField" onKeyTyped="#handleNrBileteTextField" prefHeight="25.0" prefWidth="75.0" promptText="nr bilete">
                <HBox.margin>
                   <Insets top="12.5" />
                </HBox.margin>
             </TextField>
-            <Button fx:id="cumparaBileteButton" mnemonicParsing="false" onAction="#handleCumparaBilete" text="Cumpara bilete">
+            <Button fx:id="cumparaBileteButton" mnemonicParsing="false" onAction="#handleCumparaBilete" prefHeight="25.0" prefWidth="104.0" text="Cumpara bilete">
                <HBox.margin>
-                  <Insets left="25.0" top="12.5" />
+                  <Insets left="10.0" top="12.5" />
                </HBox.margin>
             </Button>
          </children>
       </HBox>
+      <VBox fx:id="textFieldsLayout" layoutX="614.0" layoutY="109.0" prefHeight="200.0" prefWidth="175.0" />
    </children>
 </AnchorPane>

@@ -139,8 +139,8 @@ public class ZborRepositoryJDBC implements IZborRepository {
             return getAll();
         }
         List<Zbor> zborList = new ArrayList<>();
-        try(PreparedStatement preStmt = con.prepareStatement("select * from zbor where destinatie=? and data_plecarii=?")){
-            preStmt.setString(1, destinatie);
+        try(PreparedStatement preStmt = con.prepareStatement("select * from zbor where destinatie like ? and data_plecarii=?")){
+            preStmt.setString(1, "%"+destinatie+"%");
             preStmt.setString(2, dataPlecarii);
             try(ResultSet result = preStmt.executeQuery()){
                 while(result.next()){

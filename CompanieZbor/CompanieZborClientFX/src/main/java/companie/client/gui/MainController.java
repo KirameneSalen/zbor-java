@@ -1,6 +1,5 @@
 package companie.client.gui;
 
-import companie.model.Entity;
 import companie.model.Turist;
 import companie.model.User;
 import companie.model.Zbor;
@@ -15,24 +14,25 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.net.URL;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Objects;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
-import java.util.function.Predicate;
 
 public class MainController implements Initializable, ICompanieObserver {
+    @FXML
+    private TextField destinatieFilter;
+    @FXML
+    private VBox textFieldsLayout;
     @FXML
     private Button cumparaBileteButton;
     @FXML
     private TextField nrBileteTextField;
-    @FXML
-    private TextField oraPlecariiFilter;
     @FXML
     private DatePicker dataPlecariiFilter;
     @FXML
@@ -55,6 +55,7 @@ public class MainController implements Initializable, ICompanieObserver {
 
     private ICompanieServices server;
     private User user;
+    private TextField[] textFields;
 
     private static final Logger logger = LogManager.getLogger(MainController.class);
 
@@ -69,9 +70,7 @@ public class MainController implements Initializable, ICompanieObserver {
 
     public void setServer(ICompanieServices server) {
         this.server = server;
-        zborObservableList.clear();
-        zborObservableList.addAll(server.getZboruri(null, null));
-        zborTable.setItems(zborObservableList);
+        populateTableView(null, null);
         Callback<TableView<Zbor>, TableRow<Zbor>> rowFactory = new Callback<>() {
             @Override
             public TableRow<Zbor> call(TableView<Zbor> param) {
@@ -94,8 +93,24 @@ public class MainController implements Initializable, ICompanieObserver {
         };
         zborTable.setRowFactory(rowFactory);
         zborTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            cumparaBileteButton.setDisable(newValue == null);
+            cumparaBileteButton.setDisable(newValue == null && getNrBilete() > 0);
         });
+    }
+
+    private void populateTableView(String destinatie, String dataPlecarii) {
+        zborObservableList.clear();
+        zborObservableList.addAll(this.server.getZboruri(destinatie, dataPlecarii));
+        zborTable.setItems(zborObservableList);
+    }
+
+    private int getNrBilete() {
+        String nrBileteString = nrBileteTextField.getText();
+        int nrBilete = 0;
+        try {
+            nrBilete = Integer.parseInt(nrBileteString);
+        } catch (NumberFormatException ignored) {
+        }
+        return nrBilete;
     }
 
     @Override
@@ -145,23 +160,61 @@ public class MainController implements Initializable, ICompanieObserver {
     }
 
     public void handleFiltreaza(ActionEvent actionEvent) {
-
+        String dataPlecarii = dataPlecariiFilter.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String destinatie = destinatieFilter.getText();
+        System.out.println(dataPlecarii);
+        System.out.println(destinatie);
+        populateTableView(destinatie, dataPlecarii);
     }
 
     public void stergeFiltru(ActionEvent actionEvent) {
-
+        dataPlecariiFilter.setValue(null);
+        destinatieFilter.setText(null);
+        populateTableView(null, null);
     }
 
     public void handleCumparaBilete(ActionEvent actionEvent) {
-        Zbor zbor = zborTable.getSelectionModel().getSelectedItem();
-        String nrBileteString = nrBileteTextField.getText();
-        int nrBilete = 0;
-        try {
-            nrBilete = Integer.parseInt(nrBileteString);
-        } catch (NumberFormatException ignored) {
-
+        if (textFields != null && textFields.length > 0) {
+            Zbor zbor = zborTable.getSelectionModel().getSelectedItem();
+            if (zbor != null) {
+                int nrBilete = getNrBilete();
+                if (nrBilete > 0) {
+                    Turist[] lista = new Turist[nrBilete];
+                    for (int i = 0; i < nrBilete; i++) {
+                        lista[i] = new Turist(0, textFields[i].getText());
+                    }
+                    server.cumparaBilet(zbor, nrBilete, lista, this);
+                    clearBileteInputs();
+                    nrBileteTextField.setText(null);
+                }
+                else {
+                    Util.showWarning("Error!", "Error!", "Introduceti nr de bilete");
+                }
+            }
+            else{
+                Util.showWarning("Error", "Error", "Selecteaza un zbor");
+            }
         }
-        Turist[] lista = new Turist[nrBilete];
-        server.cumparaBilet(zbor, nrBilete, lista, this);
+        else {
+            Util.showWarning("Error!", "Error!", "Introduceti nr de bilete");
+        }
+    }
+
+    public void handleNrBileteTextField(KeyEvent keyEvent) {
+        int nrBilete = getNrBilete();
+        clearBileteInputs();
+        if (nrBilete > 0) {
+            textFieldsLayout.setSpacing(5);
+            textFields = new TextField[nrBilete];
+            for (int i = 0; i < nrBilete; i++) {
+                textFields[i] = new TextField();
+                textFieldsLayout.getChildren().add(textFields[i]);
+            }
+        }
+    }
+
+    private void clearBileteInputs() {
+        textFieldsLayout.getChildren().clear();
+        textFields = null;
     }
 }
